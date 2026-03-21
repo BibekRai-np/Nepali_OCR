@@ -23,5 +23,5 @@ A powerful desktop application to extract text from images and PDFs (via images)
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/nepali-ocr.git
+git clone https://github.com/BibekRai-np/Nepali_OCR
 cd nepali-ocr
