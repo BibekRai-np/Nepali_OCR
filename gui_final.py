@@ -260,7 +260,7 @@ class NepaliOCRUpgrade:
         elif self.current_zoom > 24:
             self.current_zoom = 24
         self.text_output.configure(font=("Noto Sans Devanagari", self.current_zoom))
-
+    # ---------- Developed By Bibek Rai. You can use this code but don't forget tho give credit. ----------
     def remove_enter(self):
         content = self.text_output.get(1.0, tk.END).strip()
         cleaned = " ".join(content.splitlines())
@@ -317,3 +317,4 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = NepaliOCRUpgrade(root)
     root.mainloop()
+    # ---------- Developed By Bibek Rai. You can use this code but don't forget tho give credit. ----------
