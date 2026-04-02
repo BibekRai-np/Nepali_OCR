@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="src/fevicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Lipi Saarathi | Nepali Handwriting OCR</title>
+    <!-- Google Fonts: Poppins & Noto Sans Devanagari -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #F4F7FF;
+            color: #1E2A3A;
+            line-height: 1.5;
+        }
+
+        /* container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* header / hero */
+        .hero {
+            text-align: center;
+            padding: 2rem 0 3rem;
+        }
+        .logo {
+            font-size: 2.8rem;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: -0.02em;
+        }
+        .logo span {
+            color: #E63946; /* Nepali red accent */
+        }
+        .tagline {
+            font-size: 1.2rem;
+            color: #2C3E50;
+            background: rgba(44, 62, 80, 0.05);
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            margin: 1rem 0 0.5rem;
+            font-family: 'Noto Sans Devanagari', sans-serif;
+        }
+        .subhead {
+            font-size: 1.2rem;
+            color: #4A5B6E;
+            max-width: 700px;
+            margin: 1rem auto;
+        }
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #191970; /* midnight blue */
+            color: white;
+            font-weight: 600;
+            padding: 0.9rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 8px 20px rgba(25,25,112,0.2);
+            margin-top: 1.5rem;
+        }
+        .download-btn:hover {
+            background: #2c2c8a;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(25,25,112,0.3);
+        }
+
+        /* three‑column expert section */
+        .expert-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+        .expert-card {
+            flex: 1;
+            min-width: 260px;
+            background: white;
+            border-radius: 28px;
+            padding: 1.8rem;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .expert-card:hover {
+            transform: translateY(-6px);
+        }
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+        .card-badge {
+            display: inline-block;
+            background: #EFF3F8;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #191970;
+        }
+        .expert-card p {
+            color: #2C3E50;
+            margin-bottom: 1rem;
+        }
+        .feature-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        .feature-list li {
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .feature-list i {
+            color: #191970;
+            width: 1.4rem;
+        }
+
+        /* security callout */
+        .privacy-note {
+            background: #EFF3F8;
+            border-left: 5px solid #E63946;
+            padding: 1.2rem 1.8rem;
+            border-radius: 24px;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+        }
+        .privacy-note i {
+            color: #E63946;
+            margin-right: 0.5rem;
+        }
+
+        /* features / screenshot */
+        .feature-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 3rem 0;
+            align-items: center;
+        }
+        .feature-text {
+            flex: 1;
+        }
+        .feature-text h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .mock-ui {
+            flex: 1;
+            background: #FFFFFF;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.15);
+            padding: 1rem;
+            text-align: center;
+        }
+        .mock-ui img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .placeholder-mock {
+            background: linear-gradient(145deg, #ECEFF1, #E2E8F0);
+            border-radius: 10px;
+            padding: 2rem;
+            font-family: monospace;
+            color: #2C3E50;
+        }
+
+        /* teaching section (detailed) */
+        .how-it-works {
+            background: white;
+            border-radius: 32px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+        }
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+        .step {
+            flex: 1;
+            text-align: center;
+            background: #F8FAFE;
+            padding: 1.2rem;
+            border-radius: 24px;
+        }
+        .step-number {
+            background: #191970;
+            color: white;
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 40px;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem 0 1rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            color: #5A6E7F;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 800px) {
+            .expert-grid { flex-direction: column; }
+            .feature-showcase { flex-direction: column; }
+            .steps { flex-direction: column; }
+            .container { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Hero section -->
+    <div class="hero">
+        <div class="logo">
+             <img height="auto" width="250px" style="filter: drop-shadow(.4px .5px 0px rgb(5, 0, 56));" src="src/lipi-sarathi-logo.svg"></br> Lipi <span>Saarathi</span>
+        </div>
+        <div class="tagline">
+            हस्तलेखदेखि डिजिटल, एक क्लिकमा.
+        </div>
+        <div class="subhead">
+            The first OCR tool purpose‑built for Nepali handwriting. Convert handwritten notes, documents, and letters into editable text with unmatched accuracy.<br><br>
+            <em style="margin-top: 0.8rem; font-size: 1rem;">"Convert any Nepali text image – handwritten or printed – into clean, editable text"</em>
+        </div>
+        <a href="https://github.com/BibekRai-np/Nepali_OCR/releases/download/v1.0.0/NepaliOCR.exe" class="download-btn" id="downloadMockBtn">
+            <i class="fas fa-download"></i> Download for Windows (v1.0)
+        </a>
+        <p style="margin-top: 0.8rem; font-size: 0.85rem;">Free & open‑source</p>
+        <a href="src\qr.jpg" target="_blank" class="card-badge" style="text-decoration: none">☕ Buy me a coffee</a>
+    </div>
+
+    <!-- Three expert perspectives -->
+    <div class="expert-grid">
+        <!-- Marketing perspective -->
+        <div class="expert-card">
+            <div class="card-icon"><img src="https://flagcdn.com/w80/np.png" 
+            alt="Nepal Flag" 
+            style="width: 2.5rem; height: auto;"></div>
+            <div class="card-title">🇳🇵 Contributing to Digital Nepal</div>
+            <div class="card-badge">Why users love it</div>
+            <p><strong>Lipi Saarathi</strong> solves the real problem of digitizing handwritten Nepali text. Whether you're a student, researcher, or business, save hours of manual typing.</p>
+            <ul class="feature-list">
+            <li><i class="fas fa-pen-fancy"></i> Optimized for messy Nepali handwriting, not just printed text</li>
+            <li><i class="fas fa-enter">↩️</i> One click removes unnecessary line breaks from OCR results</li>
+            <li><i class="fas fa-bolt"></i> One‑click convert, copy, or export to .txt / .docx</li>
+            <li><i class="fas fa-globe"></i> Works with both handwritten and printed Nepali script</li>
+            </ul>
+            <p style="margin-top: 0.5rem;"><i class="fas fa-quote-left"></i> “A game changer for Nepali content creators.”</p>
+        </div>
+
+        <!-- Security analyst perspective -->
+        <div class="expert-card">
+            <div class="card-icon"><i class="fas fa-shield-alt" style="color:#2C3E50;"></i></div>
+            <div class="card-title">🔒 Security & Privacy</div>
+            <div class="card-badge">Built with data safety first</div>
+            <p>We understand that your documents may contain sensitive information. Lipi Saarathi is designed to give you full control over your data.</p>
+            <ul class="feature-list">
+                <li><i class="fas fa-cloud-upload-alt"></i> The first time you run the app, a popup explains exactly how the OCR works and what data is sent.</li>
+                <li><i class="fas fa-tachometer-alt"></i> The app never collects, stores, or shares your documents or usage habits. What you process stays between you and the OCR service</li>
+                <li><i class="fas fa-file-alt"></i> Every line of code is available on GitHub for you or any security expert to audit.</li>
+            </ul>
+        </div>
+
+        <!-- IT Teacher / Educational perspective -->
+        <div class="expert-card">
+            <div class="card-icon"><i class="fas fa-chalkboard-teacher" style="color:#191970;"></i></div>
+            <div class="card-title">📚 How It Works</div>
+            <div class="card-badge">Educational deep‑dive</div>
+            <p><strong>OCR pipeline:</strong> The app uses <code>chrome-lens-py</code> to connect to Google’s powerful OCR engine (or can run fully offline with a local model in future versions).</p>
+            <ul class="feature-list">
+                <li><i class="fas fa-image"></i> 1. Image upload → pre‑processing (resize, contrast)</li>
+                <li><i class="fas fa-microchip"></i> 2. Neural network‑based text detection (Devanagari‑trained)</li>
+                <li><i class="fas fa-language"></i> 3. Language model post‑processing for Nepali</li>
+                <li><i class="fas fa-code-branch"></i> 4. Editable result, export to .txt / .docx</li>
+            </ul>
+            <p><i class="fas fa-graduation-cap"></i> Perfect for classroom demonstration: students see AI in action, learn about image processing, and privacy implications.</p>
+        </div>
+    </div>
+
+    <!-- Screenshot / mock + features -->
+    <div class="feature-showcase">
+        <div class="feature-text">
+            <h3>Experience the future of Nepali OCR</h3>
+            <p>Upload any handwritten (Also works with printed Nepali text) Nepali page, click “Generate”, and get clean, editable text within seconds. Adjust zoom, remove line breaks, and export to Word or plain text. And respects your privacy.</p>
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                <span><i class="fas fa-check-circle" style="color:#191970;"></i> Handwriting focus</span>
+                <span><i class="fas fa-check-circle" style="color:#191970;"></i> Dark/Light mode</span>
+                <span><i class="fas fa-check-circle" style="color:#191970;"></i> Copy with one click</span>
+                <span><i class="fas fa-check-circle" style="color:#191970;"></i> One‑click line break remover</span>
+            </div>
+        </div>
+        <div class="mock-ui">
+            <!-- Simple mock representation of the app UI -->
+            <div class="placeholder-mock">
+                <img src="src/Lipi Sarathi.png">
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed how‑it‑works (teaching block) -->
+    <div class="privacy-note" style="margin-top: 1rem; padding: 0.8rem;">
+    <i class="fas fa-info-circle"></i> <strong>🔐 Security & Privacy FAQ</strong><br><br>
+    <details>
+        <summary><strong>❓ Why does Windows show a "dangerous file" warning?</strong></summary>
+        <p style="margin-top: 0.5rem;">SmartScreen flags <strong>any</strong> unrecognized app, not just malware. Large commercial apps pay for code signing certificates (₹10,000+ per year). As a free open‑source project, we haven't purchased one yet. The file is safe – scan it with any antivirus or review the open-source code on GitHub.</p>
+    </details>
+    <details>
+        <summary><strong>❓ Does this app send my documents anywhere?</strong></summary>
+        <p style="margin-top: 0.5rem;">Yes – the OCR requires sending your image to Google's servers. A clear warning appears on first run, and you can choose to cancel. No documents are stored, logged, or shared beyond that single OCR request.</p>
+    </details>
+    <details>
+        <summary><strong>❓ Do you track my usage or collect data?</strong></summary>
+        <p style="margin-top: 0.5rem;"><strong>Absolutely not.</strong> Lipi Saarathi has <strong>no telemetry, no tracking, no analytics</strong>. The app is 100% open source – you can verify this yourself on GitHub.</p>
+    </details>
+    <details>
+        <summary><strong>❓ How can I trust this app?</strong></summary>
+        <p style="margin-top: 0.5rem;">The full source code is public on GitHub. You can build the `.exe` yourself, scan the downloaded file with any antivirus (0 threats), or wait for community reviews. The warning is a false positive common for independent open-source software.</p>
+    </details>
+    <p style="margin-top: 0.8rem; font-size: 0.85rem;"><i class="fas fa-shield-alt"></i> <strong>Bottom line:</strong> The app is safe, transparent, and respects your privacy. When Windows warns you, click "More info" → "Run anyway".</p>
+</div>
+    <!-- Download + final CTA -->
+    <div style="text-align: center; margin: 2.5rem 0 1rem;">
+        <a href="https://github.com/BibekRai-np/Nepali_OCR/releases/download/v1.0.0/NepaliOCR.exe" class="download-btn" id="downloadMockBtn2">
+            <i class="fas fa-arrow-down"></i> Get Lipi Saarathi (Windows .exe)
+        </a>
+        <p style="margin-top: 1rem;">Also available: source code on <a href="https://github.com/BibekRai-np/Nepali_OCR" target="_blank"><i class="fab fa-github"></i></a> GitHub (MIT License)</p>
+       <!--Buy me coffee line-->
+        <div style="
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: linear-gradient(135deg, #FFF8E7 0%, #FFEEDD 100%);
+        padding: 12px 24px;
+        border-radius: 60px;
+        border-left: 4px solid #E63946;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        margin: 20px auto;
+        font-family: 'Inter', sans-serif;">
+        <span style="font-size: 1.6rem;">☕</span>
+            <span style="font-size: 0.95rem; color: #3E2723;">
+            You can support this project by making a voluntary contribution via
+            </span>
+        <a href="src\qr.jpg" target="_blank" style="
+        background: #191970;
+        color: white;
+        text-decoration: none;
+        padding: 6px 16px;
+        border-radius: 40px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s ease;
+        " onmouseover="this.style.background='#2c2c8a'; this.style.transform='scale(1.02)';" 
+        onmouseout="this.style.background='#191970'; this.style.transform='scale(1)';">
+        📷 QR Code
+        </a>
+        </div>
+    </div>
+
+
+    <!--other projects-->
+    <div style="
+    max-width: 1280px;
+    margin: 60px auto 40px;
+    padding: 0 20px;
+    font-family: 'Inter', sans-serif;
+">
+    <!-- Section Header -->
+    <div style="
+        text-align: center;
+        margin-bottom: 32px;
+    ">
+        <h2 style="
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1E2A3A;
+            margin: 0 0 8px 0;
+            letter-spacing: -0.3px;
+        ">Other projects by Developer</h2>
+        <div style="
+            width: 60px;
+            height: 4px;
+            background: #E63946;
+            margin: 12px auto 0;
+            border-radius: 4px;
+        "></div>
+    </div>
+
+    <!-- Cards Container -->
+    <div style="
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        justify-content: center;
+    ">
+
+        <!-- Card 1: Lipi Saarathi (Nepali Unicode Keyboard) -->
+        <a href="https://bibekrai-np.github.io/Lipi_Sarathi/index.html" target="_blank" rel="noopener" style="
+            text-decoration: none;
+            flex: 1;
+            min-width: 260px;
+            background: linear-gradient(145deg, #ffffff 0%, #f8faff 100%);
+            border-radius: 28px;
+            padding: 24px 20px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+            cursor: pointer;
+            display: block;
+            color: #1E2A3A;
+        " onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 24px 40px rgba(0,0,0,0.12)';" 
+           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 12px 28px rgba(0,0,0,0.08)';">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <span style="font-size: 2.2rem;">⌨️</span>
+                <h3 style="margin: 0; font-size: 1.5rem; font-weight: 700; color: #191970;">Lipi Saarathi</h3>
+            </div>
+            <p style="font-size: 0.9rem; line-height: 1.5; margin-bottom: 16px; color: #2C3E50;">
+                <strong>Browser‑based Nepali Unicode keyboard</strong> – No installation. Three layouts: Traditional, Romanized & English QWERTY. Export to .docx, keystroke sound, touch feedback, and theme options. Perfect for government exams, offices, and typists.
+            </p>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <span style="background: #EFF3F8; padding: 4px 12px; border-radius: 30px; font-size: 0.7rem; font-weight: 600;">#Unicode</span>
+                <span style="background: #EFF3F8; padding: 4px 12px; border-radius: 30px; font-size: 0.7rem; font-weight: 600;">#NoInstall</span>
+                <span style="background: #EFF3F8; padding: 4px 12px; border-radius: 30px; font-size: 0.7rem; font-weight: 600;">#DOCXExport</span>
+            </div>
+        </a>
+
+        <!-- Card 2: Nepal Interactive Map -->
+        <a href="https://bibekrai-np.github.io/nepal-interactive-map/" target="_blank" rel="noopener" style="
+            text-decoration: none;
+            flex: 1;
+            min-width: 260px;
+            background: linear-gradient(145deg, #ffffff 0%, #f8faff 100%);
+            border-radius: 28px;
+            padding: 24px 20px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+            cursor: pointer;
+            display: block;
+            color: #1E2A3A;
+        " onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 24px 40px rgba(0,0,0,0.12)';" 
+           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 12px 28px rgba(0,0,0,0.08)';">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <span style="font-size: 2.2rem;">🗺️</span>
+                <h3 style="margin: 0; font-size: 1.5rem; font-weight: 700; color: #191970;">Discover Nepal</h3>
+            </div>
+            <p style="font-size: 0.9rem; line-height: 1.5; margin-bottom: 16px; color: #2C3E50;">
+                <strong>Interactive map of 77 districts & 7 provinces</strong> – Tap any district to explore area, population, and province. Tracks visited districts. A visual tool to learn Nepal's geography.
+            </p>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <span style="background: #EFF3F8; padding: 4px 12px; border-radius: 30px; font-size: 0.7rem; font-weight: 600;">#Map</span>
+                <span style="background: #EFF3F8; padding: 4px 12px; border-radius: 30px; font-size: 0.7rem; font-weight: 600;">#Districts</span>
+                <span style="background: #EFF3F8; padding: 4px 12px; border-radius: 30px; font-size: 0.7rem; font-weight: 600;">#Interactive</span>
+            </div>
+        </a>
+
+        <!-- Card 3: Accounting Tools for MOEST -->
+        <a href="https://bibekrai-np.github.io/Accounting-tools-for-MOEST/" target="_blank" rel="noopener" style="
+            text-decoration: none;
+            flex: 1;
+            min-width: 260px;
+            background: linear-gradient(145deg, #ffffff 0%, #f8faff 100%);
+            border-radius: 28px;
+            padding: 24px 20px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+            cursor: pointer;
+            display: block;
+            color: #1E2A3A;
+        " onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 24px 40px rgba(0,0,0,0.12)';" 
+           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 12px 28px rgba(0,0,0,0.08)';">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <span style="font-size: 2.2rem;">📊</span>
+                <h3 style="margin: 0; font-size: 1.5rem; font-weight: 700; color: #191970;">MOEST Accounting Tools</h3>
+            </div>
+            <p style="font-size: 0.9rem; line-height: 1.5; margin-bottom: 16px; color: #2C3E50;">
+                <strong>For Nepal's Ministry of Education, Science & Technology</strong> – Convert CSV/Excel data to JSON easily. Step‑by‑step guide helps prepare employee or financial data for the ministry's internal systems.
+            </p>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <span style="background: #EFF3F8; padding: 4px 12px; border-radius: 30px; font-size: 0.7rem; font-weight: 600;">#CSVtoJSON</span>
+                <span style="background: #EFF3F8; padding: 4px 12px; border-radius: 30px; font-size: 0.7rem; font-weight: 600;">#MOEST</span>
+                <span style="background: #EFF3F8; padding: 4px 12px; border-radius: 30px; font-size: 0.7rem; font-weight: 600;">#GovTech</span>
+            </div>
+        </a>
+    </div>
+</div>
+
+
+<!--whatsapp sheare button-->
+ <button style="display: block; margin: 0 auto; gap: 8px; flex-wrap:initial;  background: #09833c; /* midnight blue */ color: white; font-weight: 800; padding: 0.9rem 2rem;border-radius: 40px;" onclick="shareWhatsApp()">
+         WhatsApp मा Share गर्नुहोस्
+      </button>
+    <footer>
+        <p>© 2026 Lipi Saarathi – Designed with ❤️ for Nepal. | Privacy-first, OCR for Nepali handwriting.</p>
+        <p style="margin-top: 0.5rem;">Developed by <a href="https://www.facebook.com/share/14SVEPRB5fY/?mibextid=wwXIfr"
+       target="_blank" rel="noopener">Bibek Rai</a> & team | Security reviewed | v1.0</p>
+    </footer>
+</div>
+
+<!-- Simple popup to simulate download (since no real binary linked) -->
+<!---<script>
+    const btns = document.querySelectorAll('#downloadMockBtn, #downloadMockBtn2');
+    btns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('📦 Download would start here.\n\nLipi Sarathi .exe is ready on GitHub Releases. For this demo, the link can be pointed to your actual release URL.');
+        });
+    });
+</script> -->
+<script>
+function shareWhatsApp() {
+  const url = encodeURIComponent(window.location.href);
+  const msg = encodeURIComponent('नेपाली हस्तलिखित वा प्रिन्टेड सामाग्रीहरूको फोटोलाई अपलोड गरी सेकेन्डमै टेक्स्ट (Text) मा Convert गर्न यो OCR TOOL प्रयोग गर्नुहोस्।  · १००% निःशुल्क · Open Source ');
+  window.open('https://wa.me/?text=' + msg + url, '_blank');
+}
+</script>
+</body>
+</html>
